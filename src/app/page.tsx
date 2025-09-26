@@ -1,8 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import DonationProgress from "@/components/DonationProgress";
+import { useState } from "react";
 
 export default function Home() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
@@ -12,6 +17,8 @@ export default function Home() {
             <div className="text-3xl">Seeking Angels</div>
             <div className="text-lg">Foundation</div>
           </div>
+          
+          {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-6">
             <Link href="/" className="hover:text-green-400 transition-colors">Home</Link>
             <Link href="/mission" className="hover:text-green-400 transition-colors">About Us</Link>
@@ -19,27 +26,85 @@ export default function Home() {
             <Link href="/donation" className="hover:text-green-400 transition-colors">Help & Resources</Link>
             <Link href="/contact" className="hover:text-green-400 transition-colors">Contact</Link>
           </nav>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden p-2 rounded-lg hover:bg-blue-800 transition-colors"
+            aria-label="Toggle mobile menu"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {isMobileMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
         </div>
+
+        {/* Mobile Navigation Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden bg-blue-800 border-t border-blue-700">
+            <nav className="container mx-auto px-4 py-4 space-y-3">
+              <Link 
+                href="/" 
+                className="block py-2 hover:text-green-400 transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Home
+              </Link>
+              <Link 
+                href="/mission" 
+                className="block py-2 hover:text-green-400 transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                About Us
+              </Link>
+              <Link 
+                href="/calendar" 
+                className="block py-2 hover:text-green-400 transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Events
+              </Link>
+              <Link 
+                href="/donation" 
+                className="block py-2 hover:text-green-400 transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Help & Resources
+              </Link>
+              <Link 
+                href="/contact" 
+                className="block py-2 hover:text-green-400 transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Contact
+              </Link>
+            </nav>
+          </div>
+        )}
       </header>
 
       {/* Hero Section */}
-      <section className="bg-blue-900 text-white py-20 relative overflow-hidden">
+      <section className="bg-blue-900 text-white py-12 md:py-20 relative overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: "url('/images/image.png')" }}
         ></div>
         <div className="absolute inset-0 bg-blue-900/80"></div>
         <div className="container mx-auto px-4 text-center relative z-10">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 md:mb-6 leading-tight">
             Supporting The Rights And Mental Wellness For Veterans And First Responders
           </h1>
-          <p className="text-lg md:text-xl mb-8 max-w-4xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl mb-6 md:mb-8 max-w-4xl mx-auto leading-relaxed">
             We are dedicated to helping veterans, first responders, retirees, and their families 
             receive the resources they need for a blessed life. A life full of abundance, health and happiness.
           </p>
           <Link 
             href="/donation" 
-            className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors inline-block"
+            className="bg-green-600 hover:bg-green-700 text-white px-6 md:px-8 py-3 md:py-3 rounded-lg font-semibold transition-colors inline-block text-lg"
           >
             Donate Now
           </Link>
@@ -47,21 +112,21 @@ export default function Home() {
       </section>
 
       {/* Who We Are Section */}
-      <section className="py-16 bg-white">
+      <section className="py-12 md:py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-12 items-start">
+            <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-start">
               <div>
-                <h2 className="text-4xl md:text-5xl font-bold mb-8 text-gray-800">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 md:mb-8 text-gray-800">
                   Who We Are
                 </h2>
-                <div className="space-y-6 text-gray-700">
-                  <p className="text-lg leading-relaxed">
+                <div className="space-y-4 md:space-y-6 text-gray-700">
+                  <p className="text-base md:text-lg leading-relaxed">
                     Seeking Angels is a non-profit foundation created to help people suffering from Post Traumatic Stress. 
                     Our founder was previously involved with the Mental Restorations Foundation in Hawaii, sponsoring 
                     events for veterans and first responders.
                   </p>
-                  <p className="text-lg leading-relaxed">
+                  <p className="text-base md:text-lg leading-relaxed">
                     With the increasing natural disasters across the country, we recognized the need to help Heroes of ours 
                     replace bad memories with good ones. Our mission is to provide support, resources, and healing 
                     opportunities for those who have served our communities.
@@ -69,14 +134,14 @@ export default function Home() {
                 </div>
               </div>
               <div className="space-y-6">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="relative">
                     <Image 
                       src="/images/image_1.png" 
                       alt="Group of veterans and first responders outdoors" 
                       width={300}
                       height={192}
-                      className="w-full h-48 object-cover rounded-lg shadow-lg"
+                      className="w-full h-40 sm:h-48 object-cover rounded-lg shadow-lg"
                     />
                   </div>
                   <div className="relative">
@@ -85,21 +150,21 @@ export default function Home() {
                       alt="Military family support" 
                       width={300}
                       height={192}
-                      className="w-full h-48 object-cover rounded-lg shadow-lg"
+                      className="w-full h-40 sm:h-48 object-cover rounded-lg shadow-lg"
                     />
                   </div>
                 </div>
-                <div className="bg-gray-100 p-6 rounded-lg">
-                  <p className="text-gray-700 leading-relaxed">
+                <div className="bg-gray-100 p-4 md:p-6 rounded-lg">
+                  <p className="text-gray-700 leading-relaxed text-sm md:text-base">
                     The Seeking Angels Foundation has many needs to fulfill to make a lasting difference for our members 
                     and future generations. We need support for general operations and upcoming events.
                   </p>
-                  <p className="text-gray-700 leading-relaxed mt-4">
+                  <p className="text-gray-700 leading-relaxed mt-3 md:mt-4 text-sm md:text-base">
                     We would love to chat on the phone or schedule an appointment to discuss how you can help.
                   </p>
                   <Link 
                     href="/mission" 
-                    className="inline-block bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors mt-4"
+                    className="inline-block bg-green-600 hover:bg-green-700 text-white px-4 md:px-6 py-2 md:py-3 rounded-lg font-semibold transition-colors mt-3 md:mt-4 text-sm md:text-base"
                   >
                     About Us
                   </Link>
@@ -184,7 +249,7 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="text-center">
-                  <Image 
+          <Image
                     src="/images/image_4.png" 
                     alt="Military service member and counselor in therapy session" 
                     width={400}
@@ -296,11 +361,6 @@ export default function Home() {
           <div className="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
             <div className="text-gray-400 text-sm">
               All Copyright 2025 All Rights Reserved.
-            </div>
-            <div className="flex items-center space-x-2 text-gray-400 text-sm mt-4 md:mt-0">
-              <span>Powered by</span>
-              <span className="text-green-400">NitroPack</span>
-              <span>Automated page speed optimizations for fast site performance</span>
             </div>
           </div>
         </div>
