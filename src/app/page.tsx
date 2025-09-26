@@ -15,11 +15,19 @@ export default function Home() {
         <div className="container mx-auto px-4 flex justify-between items-center">
           <div className="flex items-center">
             <Image
-              src="/images/icon-logo-optimized.png"
+              src="/images/icon-logo-large.png"
               alt="Seeking Angels Foundation Icon"
-              width={40}
-              height={40}
-              className="h-10 w-10"
+              width={80}
+              height={80}
+              className="h-16 w-16"
+              priority
+            />
+            <Image
+              src="/images/text-logo-large.png"
+              alt="Seeking Angels Foundation"
+              width={300}
+              height={120}
+              className="h-12 w-auto ml-4"
               priority
             />
           </div>
