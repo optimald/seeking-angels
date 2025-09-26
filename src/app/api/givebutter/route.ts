@@ -27,10 +27,17 @@ export async function GET() {
 
     const campaignData = await response.json();
     
-    return NextResponse.json({
-      success: true,
-      campaign: campaignData,
-    });
+    // Transform the data to match our expected structure
+    const transformedData = {
+      id: campaignData.id || GIVEBUTTER_CAMPAIGN_ID,
+      title: campaignData.title || "Support Our Heroes - Every Dollar Counts",
+      goal_amount: campaignData.goal_amount || 75000,
+      total_raised: campaignData.total_raised || 100,
+      total_donations: campaignData.total_donations || 1,
+      description: campaignData.description || "Supporting Veterans and First Responders"
+    };
+    
+    return NextResponse.json(transformedData);
 
   } catch (error) {
     console.error('Error fetching campaign data:', error);

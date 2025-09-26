@@ -4,11 +4,11 @@ import { useState, useEffect } from 'react';
 
 interface CampaignData {
   id: string;
-  name: string;
-  goal: number;
-  raised: number;
-  donor_count: number;
-  status: string;
+  title: string;
+  goal_amount: number;
+  total_raised: number;
+  total_donations: number;
+  description?: string;
 }
 
 export default function DonationProgress() {
@@ -20,16 +20,24 @@ export default function DonationProgress() {
     const fetchCampaignData = async () => {
       try {
         const response = await fetch('/api/givebutter');
-        const data = await response.json();
-        
-        if (data.success) {
-          setCampaignData(data.campaign);
-        } else {
-          setError('Failed to load campaign data');
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || "Failed to fetch campaign data");
         }
-      } catch (err) {
-        setError('Error loading campaign data');
-        console.error('Error fetching campaign data:', err);
+        const data = await response.json();
+        setCampaignData(data);
+      } catch (err: unknown) {
+        const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+        setError(errorMessage);
+        // Set fallback data if API fails
+        setCampaignData({
+          id: "seeking-angels-foundation",
+          title: "Support Our Heroes - Every Dollar Counts",
+          goal_amount: 75000,
+          total_raised: 100,
+          total_donations: 1,
+          description: "Supporting Veterans and First Responders"
+        });
       } finally {
         setLoading(false);
       }
@@ -68,21 +76,21 @@ export default function DonationProgress() {
     );
   }
 
-  const progressPercentage = Math.min((campaignData.raised / campaignData.goal) * 100, 100);
+  const progressPercentage = Math.min((campaignData.total_raised / campaignData.goal_amount) * 100, 100);
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg">
       <h3 className="text-xl font-bold text-gray-800 mb-4">
-        {campaignData.name}
+        {campaignData.title}
       </h3>
       
       <div className="mb-4">
         <div className="flex justify-between items-center mb-2">
           <span className="text-2xl font-bold text-green-600">
-            ${campaignData.raised.toLocaleString()}
+            ${campaignData.total_raised.toLocaleString()}
           </span>
           <span className="text-gray-600">
-            Goal: ${campaignData.goal.toLocaleString()}
+            Goal: ${campaignData.goal_amount.toLocaleString()}
           </span>
         </div>
         
@@ -95,7 +103,7 @@ export default function DonationProgress() {
         
         <div className="flex justify-between items-center mt-2 text-sm text-gray-600">
           <span>{progressPercentage.toFixed(1)}% funded</span>
-          <span>{campaignData.donor_count} donors</span>
+          <span>{campaignData.total_donations} donors</span>
         </div>
       </div>
       

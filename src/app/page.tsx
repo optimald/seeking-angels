@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import DonationProgress from "@/components/DonationProgress";
 
 export default function Home() {
@@ -23,6 +24,10 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="bg-blue-900 text-white py-20 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/images/image.png')" }}
+        ></div>
         <div className="absolute inset-0 bg-blue-900/80"></div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
@@ -64,6 +69,26 @@ export default function Home() {
                 </div>
               </div>
               <div className="space-y-6">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="relative">
+                    <Image 
+                      src="/images/image_1.png" 
+                      alt="Group of veterans and first responders outdoors" 
+                      width={300}
+                      height={192}
+                      className="w-full h-48 object-cover rounded-lg shadow-lg"
+                    />
+                  </div>
+                  <div className="relative">
+                    <Image 
+                      src="/images/image_2.png" 
+                      alt="Military family support" 
+                      width={300}
+                      height={192}
+                      className="w-full h-48 object-cover rounded-lg shadow-lg"
+                    />
+                  </div>
+                </div>
                 <div className="bg-gray-100 p-6 rounded-lg">
                   <p className="text-gray-700 leading-relaxed">
                     The Seeking Angels Foundation has many needs to fulfill to make a lasting difference for our members 
@@ -87,9 +112,11 @@ export default function Home() {
 
       {/* Veterans & First Responders Resources Section */}
       <section className="py-16 bg-blue-900 text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="w-full h-full bg-gradient-to-br from-blue-600 to-blue-800"></div>
-        </div>
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/images/image_3.png')" }}
+        ></div>
+        <div className="absolute inset-0 bg-blue-900/80"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-6xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -145,17 +172,30 @@ export default function Home() {
             </div>
             
             <div className="bg-gray-50 rounded-lg p-8 mb-8">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
-                Support Our Heroes...
-              </h2>
-              <p className="text-lg text-gray-700 mb-6">
-                Please donate whatever amount you can and become a hero yourself! 
-                Our goals are impassioned and clear, this is the right thing to do for our 
-                Veterans and First Responders by replacing bad memories with new and good ones!
-              </p>
+              <div className="grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                  <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">
+                    Support Our Heroes...
+                  </h2>
+                  <p className="text-lg text-gray-700 mb-6">
+                    Please donate whatever amount you can and become a hero yourself! 
+                    Our goals are impassioned and clear, this is the right thing to do for our 
+                    Veterans and First Responders by replacing bad memories with new and good ones!
+                  </p>
+                </div>
+                <div className="text-center">
+                  <Image 
+                    src="/images/image_4.png" 
+                    alt="Military service member and counselor in therapy session" 
+                    width={400}
+                    height={300}
+                    className="w-full max-w-sm mx-auto rounded-lg shadow-lg"
+                  />
+                </div>
+              </div>
               
               {/* Donation Progress */}
-              <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
+              <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200 mt-8">
                 <DonationProgress />
               </div>
             </div>
@@ -190,9 +230,11 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-12 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="w-full h-full bg-gradient-to-br from-gray-600 to-gray-800"></div>
-        </div>
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
+          style={{ backgroundImage: "url('/images/image_5.png')" }}
+        ></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-600 to-gray-800"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid md:grid-cols-4 gap-8">
             {/* Foundation Info */}

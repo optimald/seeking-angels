@@ -22,6 +22,10 @@ export default function Mission() {
 
       {/* Hero Section */}
       <section className="bg-blue-900 text-white py-20 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/images/image_6.png')" }}
+        ></div>
         <div className="absolute inset-0 bg-blue-900/80"></div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <h1 className="text-5xl md:text-6xl font-bold mb-6">

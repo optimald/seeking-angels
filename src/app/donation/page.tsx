@@ -1,10 +1,77 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 
 export default function Donation() {
   // GiveButter Campaign ID - replace with your actual campaign ID
   const GIVEBUTTER_CAMPAIGN_ID = "seeking-angels-foundation";
+
+  // State for donation form
+  const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
+  const [customAmount, setCustomAmount] = useState<string>("");
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [donorInfo, setDonorInfo] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    comment: ""
+  });
+
+  const handleDonation = async () => {
+    if (!donorInfo.firstName || !donorInfo.email || (!selectedAmount && !customAmount)) {
+      alert("Please fill in all required fields and select a donation amount.");
+      return;
+    }
+
+    setIsProcessing(true);
+    
+    try {
+      // Create donation data
+      const donationData = {
+        campaign_id: GIVEBUTTER_CAMPAIGN_ID,
+        amount: selectedAmount || parseFloat(customAmount),
+        donor: {
+          first_name: donorInfo.firstName,
+          last_name: donorInfo.lastName,
+          email: donorInfo.email
+        },
+        comment: donorInfo.comment,
+        payment_method: "card" // Default to card payment
+      };
+
+      // Call our API route to process the donation
+      const response = await fetch('/api/givebutter/donate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(donationData),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        // Redirect to GiveButter payment page or show success
+        if (result.payment_url) {
+          window.location.href = result.payment_url;
+        } else {
+          alert("Donation processed successfully! Thank you for your support.");
+          // Reset form
+          setSelectedAmount(null);
+          setCustomAmount("");
+          setDonorInfo({ firstName: "", lastName: "", email: "", comment: "" });
+        }
+      } else {
+        const error = await response.json();
+        alert(`Error processing donation: ${error.message}`);
+      }
+    } catch (error) {
+      console.error('Donation error:', error);
+      alert("There was an error processing your donation. Please try again.");
+    } finally {
+      setIsProcessing(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -27,6 +94,10 @@ export default function Donation() {
 
       {/* Hero Section */}
       <section className="bg-blue-900 text-white py-20 relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/images/image_7.png')" }}
+        ></div>
         <div className="absolute inset-0 bg-blue-900/80"></div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
@@ -79,7 +150,7 @@ export default function Donation() {
               Support Our Heroes - Every Dollar Counts
             </h2>
             
-            {/* GiveButter Embedded Widget */}
+            {/* Custom Donation Form */}
             <div className="bg-white rounded-lg shadow-xl p-8 border border-gray-200">
               <div className="text-center mb-8">
                 <h3 className="text-2xl font-bold text-gray-800 mb-4">
@@ -92,41 +163,109 @@ export default function Donation() {
                 </p>
               </div>
 
-              {/* GiveButter Donation Form */}
-              <div className="givebutter-widget-container">
-                <iframe
-                  src={`https://givebutter.com/embed/c/${GIVEBUTTER_CAMPAIGN_ID}`}
-                  width="100%"
-                  height="600"
-                  frameBorder="0"
-                  className="rounded-lg"
-                  title="GiveButter Donation Form"
-                ></iframe>
+              {/* Donation Amount Selection */}
+              <div className="mb-8">
+                <h4 className="text-lg font-semibold text-gray-800 mb-4">Donation Amount</h4>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                  {[10, 50, 100, 200].map((amount) => (
+                    <button
+                      key={amount}
+                      onClick={() => setSelectedAmount(amount)}
+                      className={`p-4 rounded-lg border-2 font-semibold transition-colors ${
+                        selectedAmount === amount
+                          ? 'border-green-600 bg-green-50 text-green-700'
+                          : 'border-gray-300 hover:border-green-400 text-gray-700'
+                      }`}
+                    >
+                      ${amount}
+                    </button>
+                  ))}
+                </div>
+                <div className="flex gap-4">
+                  <input
+                    type="number"
+                    placeholder="Custom Amount"
+                    value={customAmount || ''}
+                    onChange={(e) => {
+                      setCustomAmount(e.target.value);
+                      setSelectedAmount(null);
+                    }}
+                    className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                  />
+                  <button
+                    onClick={() => {
+                      setCustomAmount('');
+                      setSelectedAmount(null);
+                    }}
+                    className="px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors"
+                  >
+                    Clear
+                  </button>
+                </div>
               </div>
 
-              {/* Alternative: Direct Link Button */}
-              <div className="mt-8 text-center">
-                <p className="text-gray-600 mb-4">
-                  Having trouble with the form above? 
-                </p>
-                <a
-                  href={`https://givebutter.com/${GIVEBUTTER_CAMPAIGN_ID}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
+              {/* Donor Information */}
+              <div className="mb-8">
+                <h4 className="text-lg font-semibold text-gray-800 mb-4">Donor Information</h4>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <input
+                    type="text"
+                    placeholder="First Name *"
+                    value={donorInfo.firstName}
+                    onChange={(e) => setDonorInfo({...donorInfo, firstName: e.target.value})}
+                    className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                    required
+                  />
+                  <input
+                    type="text"
+                    placeholder="Last Name"
+                    value={donorInfo.lastName}
+                    onChange={(e) => setDonorInfo({...donorInfo, lastName: e.target.value})}
+                    className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                  />
+                  <input
+                    type="email"
+                    placeholder="Email Address *"
+                    value={donorInfo.email}
+                    onChange={(e) => setDonorInfo({...donorInfo, email: e.target.value})}
+                    className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 md:col-span-2"
+                    required
+                  />
+                </div>
+                <textarea
+                  placeholder="Comment (optional)"
+                  value={donorInfo.comment}
+                  onChange={(e) => setDonorInfo({...donorInfo, comment: e.target.value})}
+                  className="w-full mt-4 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                  rows={3}
+                />
+              </div>
+
+              {/* Donation Summary */}
+              <div className="bg-gray-50 rounded-lg p-6 mb-8">
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-lg font-semibold text-gray-800">Donation Total:</span>
+                  <span className="text-2xl font-bold text-green-600">
+                    ${selectedAmount || customAmount || 0}
+                  </span>
+                </div>
+                <button
+                  onClick={handleDonation}
+                  disabled={!donorInfo.firstName || !donorInfo.email || (!selectedAmount && !customAmount)}
+                  className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white py-4 rounded-lg font-semibold transition-colors"
                 >
-                  Donate on GiveButter →
-                </a>
+                  {isProcessing ? 'Processing...' : 'Donate Now'}
+                </button>
               </div>
 
               {/* Security Notice */}
-              <div className="mt-8 p-4 bg-green-50 rounded-lg">
+              <div className="p-4 bg-green-50 rounded-lg">
                 <div className="flex items-center">
                   <div className="text-green-600 mr-3">🔒</div>
                   <div>
                     <h4 className="font-semibold text-green-800">Secure Donation</h4>
                     <p className="text-green-700 text-sm">
-                      Your donation is processed securely through GiveButter. 
+                      Your donation is processed securely through GiveButter.
                       You will receive a tax-deductible receipt via email.
                     </p>
                   </div>
