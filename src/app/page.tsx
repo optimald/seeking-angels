@@ -13,9 +13,19 @@ export default function Home() {
       {/* Header */}
       <header className="bg-blue-900 text-white py-4">
         <div className="container mx-auto px-4 flex justify-between items-center">
-          <div className="text-2xl font-bold font-fraunces">
-            <div className="text-3xl">Seeking Angels</div>
-            <div className="text-lg">Foundation</div>
+          <div className="flex items-center">
+            <Image
+              src="/images/logo-optimized.png"
+              alt="Seeking Angels Foundation Logo"
+              width={60}
+              height={60}
+              className="h-12 w-auto"
+              priority
+            />
+            <div className="ml-3 text-2xl font-bold font-fraunces">
+              <div className="text-3xl">Seeking Angels</div>
+              <div className="text-lg">Foundation</div>
+            </div>
           </div>
           
           {/* Desktop Navigation */}
@@ -304,9 +314,18 @@ export default function Home() {
           <div className="grid md:grid-cols-4 gap-8">
             {/* Foundation Info */}
             <div className="space-y-4">
-              <div className="text-2xl font-bold font-fraunces">
-                <div className="text-3xl">Seeking Angels</div>
-                <div className="text-lg">Foundation</div>
+              <div className="flex items-center">
+                <Image
+                  src="/images/logo-optimized.png"
+                  alt="Seeking Angels Foundation Logo"
+                  width={50}
+                  height={50}
+                  className="h-10 w-auto"
+                />
+                <div className="ml-3 text-2xl font-bold font-fraunces">
+                  <div className="text-3xl">Seeking Angels</div>
+                  <div className="text-lg">Foundation</div>
+                </div>
               </div>
               <p className="text-gray-300 leading-relaxed font-nunito">
                 We are dedicated to helping veterans, first responders, retirees, and their families 
