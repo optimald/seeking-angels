@@ -1,14 +1,33 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Donation() {
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
   const [customAmount, setCustomAmount] = useState("");
   const [donationType, setDonationType] = useState("one-time");
+  const [campaignData, setCampaignData] = useState<any>(null);
 
   const predefinedAmounts = [25, 50, 100, 250, 500, 1000];
+
+  // GiveButter Campaign ID - replace with your actual campaign ID
+  const GIVEBUTTER_CAMPAIGN_ID = "seeking-angels-foundation";
+
+  useEffect(() => {
+    // Load GiveButter campaign data
+    const loadCampaignData = async () => {
+      try {
+        // This would typically be done server-side for security
+        // For now, we'll use the embedded widget approach
+        console.log("Loading GiveButter campaign data...");
+      } catch (error) {
+        console.error("Error loading campaign data:", error);
+      }
+    };
+
+    loadCampaignData();
+  }, []);
 
   const handleAmountSelect = (amount: number) => {
     setSelectedAmount(amount);
@@ -81,144 +100,67 @@ export default function Donation() {
         </div>
       </section>
 
-      {/* Donation Form */}
+      {/* GiveButter Donation Widget */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
+              Support Our Heroes - Every Dollar Counts
+            </h2>
+            
+            {/* GiveButter Embedded Widget */}
             <div className="bg-white rounded-lg shadow-xl p-8 border border-gray-200">
-              <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
-                Make a Donation
-              </h2>
-              
-              {/* Donation Type */}
-              <div className="mb-8">
-                <label className="block text-sm font-medium text-gray-700 mb-4">
-                  Donation Type
-                </label>
-                <div className="flex space-x-4">
-                  <button
-                    onClick={() => setDonationType("one-time")}
-                    className={`flex-1 py-3 px-4 rounded-lg font-semibold transition-colors ${
-                      donationType === "one-time"
-                        ? "bg-green-600 text-white"
-                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                    }`}
-                  >
-                    One-Time
-                  </button>
-                  <button
-                    onClick={() => setDonationType("monthly")}
-                    className={`flex-1 py-3 px-4 rounded-lg font-semibold transition-colors ${
-                      donationType === "monthly"
-                        ? "bg-green-600 text-white"
-                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                    }`}
-                  >
-                    Monthly
-                  </button>
-                </div>
+              <div className="text-center mb-8">
+                <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                  Let's Invest In Someone's Future
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  Please donate whatever amount you can and become a hero yourself! 
+                  Our goals are impassioned and clear, this is the right thing to do for our 
+                  Veterans and First Responders by replacing bad memories with new and good ones!
+                </p>
               </div>
 
-              {/* Amount Selection */}
-              <div className="mb-8">
-                <label className="block text-sm font-medium text-gray-700 mb-4">
-                  Select Amount
-                </label>
-                <div className="grid grid-cols-3 gap-3 mb-4">
-                  {predefinedAmounts.map((amount) => (
-                    <button
-                      key={amount}
-                      onClick={() => handleAmountSelect(amount)}
-                      className={`py-3 px-4 rounded-lg font-semibold transition-colors ${
-                        selectedAmount === amount
-                          ? "bg-green-600 text-white"
-                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                      }`}
-                    >
-                      ${amount}
-                    </button>
-                  ))}
-                </div>
-                
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
-                  <input
-                    type="number"
-                    placeholder="Custom amount"
-                    value={customAmount}
-                    onChange={(e) => handleCustomAmount(e.target.value)}
-                    className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                  />
-                </div>
+              {/* GiveButter Donation Form */}
+              <div className="givebutter-widget-container">
+                <iframe
+                  src={`https://givebutter.com/embed/c/${GIVEBUTTER_CAMPAIGN_ID}`}
+                  width="100%"
+                  height="600"
+                  frameBorder="0"
+                  className="rounded-lg"
+                  title="GiveButter Donation Form"
+                ></iframe>
               </div>
 
-              {/* Donor Information */}
-              <div className="mb-8">
-                <h3 className="text-lg font-semibold mb-4 text-gray-800">Donor Information</h3>
-                <div className="grid md:grid-cols-2 gap-4 mb-4">
-                  <input
-                    type="text"
-                    placeholder="First Name"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Last Name"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                  />
-                </div>
-                <input
-                  type="email"
-                  placeholder="Email Address"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent mb-4"
-                />
-                <input
-                  type="tel"
-                  placeholder="Phone Number (Optional)"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                />
+              {/* Alternative: Direct Link Button */}
+              <div className="mt-8 text-center">
+                <p className="text-gray-600 mb-4">
+                  Having trouble with the form above? 
+                </p>
+                <a
+                  href={`https://givebutter.com/${GIVEBUTTER_CAMPAIGN_ID}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
+                >
+                  Donate on GiveButter →
+                </a>
               </div>
 
-              {/* Payment Method */}
-              <div className="mb-8">
-                <h3 className="text-lg font-semibold mb-4 text-gray-800">Payment Method</h3>
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-3">
-                    <input type="radio" id="card" name="payment" defaultChecked className="text-green-600" />
-                    <label htmlFor="card" className="text-gray-700">Credit/Debit Card</label>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <input type="radio" id="paypal" name="payment" className="text-green-600" />
-                    <label htmlFor="paypal" className="text-gray-700">PayPal</label>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <input type="radio" id="bank" name="payment" className="text-green-600" />
-                    <label htmlFor="bank" className="text-gray-700">Bank Transfer</label>
+              {/* Security Notice */}
+              <div className="mt-8 p-4 bg-green-50 rounded-lg">
+                <div className="flex items-center">
+                  <div className="text-green-600 mr-3">🔒</div>
+                  <div>
+                    <h4 className="font-semibold text-green-800">Secure Donation</h4>
+                    <p className="text-green-700 text-sm">
+                      Your donation is processed securely through GiveButter. 
+                      You will receive a tax-deductible receipt via email.
+                    </p>
                   </div>
                 </div>
               </div>
-
-              {/* Special Instructions */}
-              <div className="mb-8">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Special Instructions (Optional)
-                </label>
-                <textarea
-                  rows={3}
-                  placeholder="Any special instructions or dedication for your donation..."
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                ></textarea>
-              </div>
-
-              {/* Submit Button */}
-              <button className="w-full bg-green-600 hover:bg-green-700 text-white py-4 px-6 rounded-lg font-semibold text-lg transition-colors">
-                Donate {selectedAmount ? `$${selectedAmount}` : customAmount ? `$${customAmount}` : ""} 
-                {donationType === "monthly" ? " Monthly" : " Now"}
-              </button>
-
-              <p className="text-sm text-gray-500 text-center mt-4">
-                Your donation is secure and tax-deductible. You will receive a receipt via email.
-              </p>
             </div>
           </div>
         </div>

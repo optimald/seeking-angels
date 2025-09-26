@@ -1,36 +1,107 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Seeking Angels Foundation Website
 
-## Getting Started
+A modern Next.js website for the Seeking Angels Foundation, dedicated to supporting First Responders through healing retreats and C-PTSD support programs.
 
-First, run the development server:
+## Features
+
+- **Homepage**: Hero section, mission overview, and donation progress
+- **Mission Page**: Detailed information about C-PTSD support and First Responder programs
+- **Calendar Page**: Interactive flight schedule (LAX to Loreto, BCS) with booking system
+- **Donation Page**: Integrated GiveButter donation widget and progress tracking
+- **Contact Page**: Contact form, FAQ, and emergency resources
+
+## GiveButter Integration
+
+This website integrates with [GiveButter](https://docs.givebutter.com/reference/reference-getting-started) for secure donation processing and campaign management.
+
+### Setup Instructions
+
+1. **Create GiveButter Account**
+   - Sign up at [givebutter.com](https://givebutter.com)
+   - Create a campaign for "Seeking Angels Foundation"
+
+2. **Configure Environment Variables**
+   ```bash
+   cp .env.example .env.local
+   ```
+   
+   Update `.env.local` with your GiveButter credentials:
+   ```
+   GIVEBUTTER_API_KEY=your_api_key_here
+   GIVEBUTTER_CAMPAIGN_ID=your_campaign_id
+   NEXT_PUBLIC_GIVEBUTTER_CAMPAIGN_ID=your_campaign_id
+   ```
+
+3. **Get API Key**
+   - Log into your GiveButter dashboard
+   - Navigate to Settings > API
+   - Generate a new API key
+   - Add it to your environment variables
+
+4. **Configure Webhooks** (Optional)
+   - In GiveButter dashboard, go to Settings > Webhooks
+   - Add webhook URL: `https://yourdomain.com/api/givebutter`
+   - Select events: `donation.created`, `donation.updated`
+
+### GiveButter Features Used
+
+- **Embedded Donation Widget**: Secure iframe integration
+- **Campaign API**: Real-time progress tracking
+- **Webhook Integration**: Automatic donation processing
+- **Tax-Deductible Receipts**: Automatic email receipts
+
+## Development
 
 ```bash
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build for production
+npm run build
+
+# Start production server
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Deployment
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The website is configured for deployment on Vercel with automatic GitHub integration.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Vercel Environment Variables
 
-## Learn More
+Add these environment variables in your Vercel dashboard:
 
-To learn more about Next.js, take a look at the following resources:
+- `GIVEBUTTER_API_KEY`
+- `GIVEBUTTER_CAMPAIGN_ID`
+- `NEXT_PUBLIC_GIVEBUTTER_CAMPAIGN_ID`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Flight Schedule
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The calendar page features:
+- **Route**: LAX (Los Angeles) to LTO (Loreto, Baja California Sur)
+- **Frequency**: Every Thursday
+- **Capacity**: 2 groups of 4-6 people per week
+- **Duration**: 52 weeks per year
+- **Activities**: Therapeutic retreats, mindfulness training, community support
 
-## Deploy on Vercel
+## Technology Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Framework**: Next.js 15 with App Router
+- **Styling**: Tailwind CSS
+- **Language**: TypeScript
+- **Donations**: GiveButter API integration
+- **Deployment**: Vercel
+- **Version Control**: GitHub
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Support
+
+For technical support or questions about the GiveButter integration, please refer to:
+- [GiveButter API Documentation](https://docs.givebutter.com/reference/reference-getting-started)
+- [Next.js Documentation](https://nextjs.org/docs)
+
+## License
+
+© 2024 Seeking Angels Foundation. All rights reserved.
