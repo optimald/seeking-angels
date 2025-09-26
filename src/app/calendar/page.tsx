@@ -18,6 +18,7 @@ export default function Calendar() {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [selectedWeek, setSelectedWeek] = useState<{start: Date, end: Date} | null>(null);
   const [showReservationForm, setShowReservationForm] = useState(false);
+  const [hoveredWeek, setHoveredWeek] = useState<{start: Date, end: Date} | null>(null);
   const [reservationData, setReservationData] = useState<ReservationFormData>({
     name: "",
     email: "",
@@ -85,6 +86,17 @@ export default function Calendar() {
       });
       setShowReservationForm(true);
     }
+  };
+
+  const handleDateHover = (day: number, month: number, year: number) => {
+    if (isRetreatWeek(day, month, year)) {
+      const week = getRetreatWeek(day, month, year);
+      setHoveredWeek(week);
+    }
+  };
+
+  const handleDateLeave = () => {
+    setHoveredWeek(null);
   };
 
   const handleReservationSubmit = async (e: React.FormEvent) => {
@@ -197,36 +209,85 @@ export default function Calendar() {
       <section className="py-8 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Month</label>
-                <select 
-                  value={selectedMonth} 
-                  onChange={(e) => setSelectedMonth(parseInt(e.target.value))}
-                  className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                >
-                  {months.map((month, index) => (
-                    <option key={index} value={index}>{month}</option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Year</label>
-                <select 
-                  value={selectedYear} 
-                  onChange={(e) => setSelectedYear(parseInt(e.target.value))}
-                  className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                >
-                  {years.map((year) => (
-                    <option key={year} value={year}>{year}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
+            <div className="flex items-center justify-center gap-4 mb-8">
+              {/* Previous Year Button */}
+              <button
+                onClick={() => setSelectedYear(selectedYear - 1)}
+                className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                title="Previous Year"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+                </svg>
+              </button>
+              
+              {/* Previous Month Button */}
+              <button
+                onClick={() => {
+                  if (selectedMonth === 0) {
+                    setSelectedMonth(11);
+                    setSelectedYear(selectedYear - 1);
+                  } else {
+                    setSelectedMonth(selectedMonth - 1);
+                  }
+                }}
+                className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                title="Previous Month"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
 
-            <h2 className="text-2xl font-bold mb-8 text-center text-gray-800">
-              {months[selectedMonth]} {selectedYear} Retreat Calendar
-            </h2>
+              {/* Current Month/Year Display */}
+              <div className="text-center min-w-[200px]">
+                <h2 className="text-2xl font-bold text-gray-800">
+                  {months[selectedMonth]} {selectedYear}
+                </h2>
+              </div>
+
+              {/* Next Month Button */}
+              <button
+                onClick={() => {
+                  if (selectedMonth === 11) {
+                    setSelectedMonth(0);
+                    setSelectedYear(selectedYear + 1);
+                  } else {
+                    setSelectedMonth(selectedMonth + 1);
+                  }
+                }}
+                className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                title="Next Month"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+
+              {/* Next Year Button */}
+              <button
+                onClick={() => setSelectedYear(selectedYear + 1)}
+                className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                title="Next Year"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                </svg>
+              </button>
+
+              {/* Today Button */}
+              <button
+                onClick={() => {
+                  const today = new Date();
+                  setSelectedMonth(today.getMonth());
+                  setSelectedYear(today.getFullYear());
+                }}
+                className="ml-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors"
+                title="Go to Current Month"
+              >
+                Today
+              </button>
+            </div>
 
             {/* Calendar Legend */}
             <div className="mb-6 p-4 bg-green-50 rounded-lg">
