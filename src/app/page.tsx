@@ -15,17 +15,13 @@ export default function Home() {
         <div className="container mx-auto px-4 flex justify-between items-center">
           <div className="flex items-center">
             <Image
-              src="/images/logo-optimized.png"
-              alt="Seeking Angels Foundation Logo"
-              width={60}
-              height={60}
-              className="h-12 w-auto"
+              src="/images/icon-logo-optimized.png"
+              alt="Seeking Angels Foundation Icon"
+              width={40}
+              height={40}
+              className="h-10 w-10"
               priority
             />
-            <div className="ml-3 text-2xl font-bold font-fraunces">
-              <div className="text-3xl">Seeking Angels</div>
-              <div className="text-lg">Foundation</div>
-            </div>
           </div>
           
           {/* Desktop Navigation */}
@@ -316,16 +312,12 @@ export default function Home() {
             <div className="space-y-4">
               <div className="flex items-center">
                 <Image
-                  src="/images/logo-optimized.png"
+                  src="/images/full-logo-optimized.png"
                   alt="Seeking Angels Foundation Logo"
-                  width={50}
-                  height={50}
-                  className="h-10 w-auto"
+                  width={300}
+                  height={150}
+                  className="h-16 w-auto"
                 />
-                <div className="ml-3 text-2xl font-bold font-fraunces">
-                  <div className="text-3xl">Seeking Angels</div>
-                  <div className="text-lg">Foundation</div>
-                </div>
               </div>
               <p className="text-gray-300 leading-relaxed font-nunito">
                 We are dedicated to helping veterans, first responders, retirees, and their families 
