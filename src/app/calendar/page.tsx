@@ -47,7 +47,8 @@ export default function Calendar() {
     const date = new Date(year, month, day);
     const dayOfWeek = date.getDay();
     // Retreat weeks run from Saturday (6) to Thursday (4)
-    return dayOfWeek >= 4 || dayOfWeek === 6;
+    // Saturday=6, Sunday=0, Monday=1, Tuesday=2, Wednesday=3, Thursday=4
+    return dayOfWeek === 6 || dayOfWeek <= 4;
   };
 
   const getRetreatWeek = (day: number, month: number, year: number) => {
@@ -57,16 +58,18 @@ export default function Calendar() {
     let startDate: Date;
     if (dayOfWeek === 6) { // Saturday
       startDate = date;
-    } else if (dayOfWeek >= 4) { // Thursday or Friday
+    } else if (dayOfWeek <= 4) { // Sunday to Thursday
       startDate = new Date(date);
-      startDate.setDate(date.getDate() - (dayOfWeek === 4 ? 1 : 2));
-    } else { // Sunday to Wednesday
-      startDate = new Date(date);
+      // Go back to the previous Saturday
       startDate.setDate(date.getDate() - (dayOfWeek + 1));
+    } else { // Friday
+      startDate = new Date(date);
+      // Go back to the previous Saturday
+      startDate.setDate(date.getDate() - 6);
     }
     
     const endDate = new Date(startDate);
-    endDate.setDate(startDate.getDate() + 5); // Thursday
+    endDate.setDate(startDate.getDate() + 5); // Thursday (5 days after Saturday)
     
     return { start: startDate, end: endDate };
   };
