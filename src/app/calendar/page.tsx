@@ -57,22 +57,26 @@ export default function Calendar() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="bg-black text-white py-4">
+      <header className="bg-blue-900 text-white py-4">
         <div className="container mx-auto px-4 flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold">Seeking Angels Foundation</Link>
+          <div className="text-2xl font-bold">
+            <div className="text-3xl">Seeking Angels</div>
+            <div className="text-lg">Foundation</div>
+          </div>
           <nav className="hidden md:flex space-x-6">
             <Link href="/" className="hover:text-green-400 transition-colors">Home</Link>
-            <Link href="/mission" className="hover:text-green-400 transition-colors">Mission</Link>
-            <Link href="/calendar" className="text-green-400">Calendar</Link>
-            <Link href="/donation" className="hover:text-green-400 transition-colors">Donate</Link>
+            <Link href="/mission" className="hover:text-green-400 transition-colors">About Us</Link>
+            <Link href="/calendar" className="text-green-400">Events</Link>
+            <Link href="/donation" className="hover:text-green-400 transition-colors">Help & Resources</Link>
             <Link href="/contact" className="hover:text-green-400 transition-colors">Contact</Link>
           </nav>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-purple-900 to-black text-white py-20">
-        <div className="container mx-auto px-4 text-center">
+      <section className="bg-blue-900 text-white py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-blue-900/80"></div>
+        <div className="container mx-auto px-4 text-center relative z-10">
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
             Flight Schedule
           </h1>
