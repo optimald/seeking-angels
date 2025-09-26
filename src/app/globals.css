@@ -8,8 +8,11 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-montserrat);
+  --font-serif: var(--font-fraunces);
+  --font-nunito: var(--font-nunito);
+  --font-kumbh: var(--font-kumbh-sans);
+  --font-inter: var(--font-inter);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,5 +25,26 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
+}
+
+/* Font utility classes */
+.font-montserrat {
+  font-family: var(--font-montserrat), sans-serif;
+}
+
+.font-fraunces {
+  font-family: var(--font-fraunces), serif;
+}
+
+.font-nunito {
+  font-family: var(--font-nunito), sans-serif;
+}
+
+.font-kumbh {
+  font-family: var(--font-kumbh-sans), sans-serif;
+}
+
+.font-inter {
+  font-family: var(--font-inter), sans-serif;
 }

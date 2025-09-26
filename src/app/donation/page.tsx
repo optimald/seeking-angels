@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { track } from "@vercel/analytics";
 
 export default function Donation() {
   // GiveButter Campaign ID - replace with your actual campaign ID
@@ -23,6 +24,13 @@ export default function Donation() {
       alert("Please fill in all required fields and select a donation amount.");
       return;
     }
+
+    // Track donation attempt
+    const donationAmount = selectedAmount || parseFloat(customAmount);
+    track('donation_attempt', {
+      amount: donationAmount,
+      campaign: GIVEBUTTER_CAMPAIGN_ID
+    });
 
     setIsProcessing(true);
     
@@ -51,6 +59,14 @@ export default function Donation() {
 
       if (response.ok) {
         const result = await response.json();
+        
+        // Track successful donation
+        track('donation_success', {
+          amount: donationAmount,
+          campaign: GIVEBUTTER_CAMPAIGN_ID,
+          donation_id: result.donation_id
+        });
+        
         // Redirect to GiveButter payment page or show success
         if (result.payment_url) {
           window.location.href = result.payment_url;
@@ -63,6 +79,14 @@ export default function Donation() {
         }
       } else {
         const error = await response.json();
+        
+        // Track donation error
+        track('donation_error', {
+          amount: donationAmount,
+          campaign: GIVEBUTTER_CAMPAIGN_ID,
+          error: error.message
+        });
+        
         alert(`Error processing donation: ${error.message}`);
       }
     } catch (error) {
@@ -164,14 +188,14 @@ export default function Donation() {
               </div>
 
               {/* Donation Amount Selection */}
-              <div className="mb-8">
-                <h4 className="text-lg font-semibold text-gray-800 mb-4">Donation Amount</h4>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+              <div className="mb-6 md:mb-8">
+                <h4 className="text-base md:text-lg font-semibold text-gray-800 mb-3 md:mb-4">Donation Amount</h4>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-4">
                   {[10, 50, 100, 200].map((amount) => (
                     <button
                       key={amount}
                       onClick={() => setSelectedAmount(amount)}
-                      className={`p-4 rounded-lg border-2 font-semibold transition-colors ${
+                      className={`p-3 md:p-4 rounded-lg border-2 font-semibold transition-colors text-sm md:text-base ${
                         selectedAmount === amount
                           ? 'border-green-600 bg-green-50 text-green-700'
                           : 'border-gray-300 hover:border-green-400 text-gray-700'
@@ -181,7 +205,7 @@ export default function Donation() {
                     </button>
                   ))}
                 </div>
-                <div className="flex gap-4">
+                <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
                   <input
                     type="number"
                     placeholder="Custom Amount"
@@ -190,14 +214,14 @@ export default function Donation() {
                       setCustomAmount(e.target.value);
                       setSelectedAmount(null);
                     }}
-                    className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                    className="flex-1 px-3 md:px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-base"
                   />
                   <button
                     onClick={() => {
                       setCustomAmount('');
                       setSelectedAmount(null);
                     }}
-                    className="px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors"
+                    className="px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors text-sm md:text-base"
                   >
                     Clear
                   </button>
