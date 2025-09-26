@@ -281,7 +281,7 @@ export default function Calendar() {
             </p>
             <div className="grid md:grid-cols-2 gap-8">
               <div className="bg-white p-6 rounded-lg shadow-lg">
-                <h3 className="text-xl font-bold mb-4 text-blue-800">What's Included</h3>
+                <h3 className="text-xl font-bold mb-4 text-blue-800">What&apos;s Included</h3>
                 <ul className="text-left text-gray-700 space-y-2">
                   <li>✈️ Round-trip flights from LAX to Loreto</li>
                   <li>🏨 Accommodation and meals</li>

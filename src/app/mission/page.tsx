@@ -82,8 +82,8 @@ export default function Mission() {
                   commitment to saving lives in any situation.
                 </p>
                 <p className="text-gray-700">
-                  Yet these heroes often struggle in silence with the weight of what 
-                  they've witnessed and experienced in their service to others.
+              Yet these heroes often struggle in silence with the weight of what 
+              they&apos;ve witnessed and experienced in their service to others.
                 </p>
               </div>
             </div>

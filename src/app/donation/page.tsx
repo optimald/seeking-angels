@@ -1,43 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
 
 export default function Donation() {
-  const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
-  const [customAmount, setCustomAmount] = useState("");
-  const [donationType, setDonationType] = useState("one-time");
-  const [campaignData, setCampaignData] = useState<any>(null);
-
-  const predefinedAmounts = [25, 50, 100, 250, 500, 1000];
-
   // GiveButter Campaign ID - replace with your actual campaign ID
   const GIVEBUTTER_CAMPAIGN_ID = "seeking-angels-foundation";
-
-  useEffect(() => {
-    // Load GiveButter campaign data
-    const loadCampaignData = async () => {
-      try {
-        // This would typically be done server-side for security
-        // For now, we'll use the embedded widget approach
-        console.log("Loading GiveButter campaign data...");
-      } catch (error) {
-        console.error("Error loading campaign data:", error);
-      }
-    };
-
-    loadCampaignData();
-  }, []);
-
-  const handleAmountSelect = (amount: number) => {
-    setSelectedAmount(amount);
-    setCustomAmount("");
-  };
-
-  const handleCustomAmount = (value: string) => {
-    setCustomAmount(value);
-    setSelectedAmount(null);
-  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -62,7 +29,7 @@ export default function Donation() {
             Support Our Heroes
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-green-400">
-            Every Dollar Counts, Invest In Someone's Future
+            Every Dollar Counts, Invest In Someone&apos;s Future
           </p>
           <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto">
             Your donation directly supports First Responders in their healing journey, 
@@ -89,7 +56,7 @@ export default function Donation() {
               </div>
               <div className="text-center">
                 <div className="text-4xl font-bold text-purple-600 mb-2">$500</div>
-                <p className="text-gray-700">Funds one person's retreat experience</p>
+                <p className="text-gray-700">Funds one person&apos;s retreat experience</p>
               </div>
               <div className="text-center">
                 <div className="text-4xl font-bold text-orange-600 mb-2">$1000</div>
@@ -112,7 +79,7 @@ export default function Donation() {
             <div className="bg-white rounded-lg shadow-xl p-8 border border-gray-200">
               <div className="text-center mb-8">
                 <h3 className="text-2xl font-bold text-gray-800 mb-4">
-                  Let's Invest In Someone's Future
+                  Let&apos;s Invest In Someone&apos;s Future
                 </h3>
                 <p className="text-gray-600 mb-6">
                   Please donate whatever amount you can and become a hero yourself! 
@@ -303,7 +270,7 @@ export default function Donation() {
           </h2>
           <p className="text-lg mb-8 max-w-3xl mx-auto">
             Veterans and First Responders are always there for us, but they see more than 
-            their share of traumatic situations. Let's turn the table and help them! 
+            their share of traumatic situations. Let&apos;s turn the table and help them! 
             Every donation, no matter the size, makes a meaningful difference.
           </p>
           <Link 

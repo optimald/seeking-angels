@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 const GIVEBUTTER_API_KEY = process.env.GIVEBUTTER_API_KEY;
 const GIVEBUTTER_CAMPAIGN_ID = process.env.GIVEBUTTER_CAMPAIGN_ID || 'seeking-angels-foundation';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     if (!GIVEBUTTER_API_KEY) {
       return NextResponse.json(

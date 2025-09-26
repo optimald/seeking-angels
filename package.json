@@ -4,6 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "dev:3005": "./scripts/dev.sh",
+    "dev:quick": "./scripts/quick-dev.sh",
+    "stop": "./scripts/stop-dev.sh",
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint"

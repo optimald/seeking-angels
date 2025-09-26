@@ -53,8 +53,8 @@ export default function Contact() {
             Ready to Make a Difference?
           </p>
           <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto">
-            Whether you're a First Responder seeking support, a potential donor, 
-            or someone who wants to get involved, we'd love to hear from you.
+          Whether you&apos;re a First Responder seeking support, a potential donor, 
+          or someone who wants to get involved, we&apos;d love to hear from you.
           </p>
         </div>
       </section>
@@ -71,7 +71,7 @@ export default function Contact() {
                 <div className="text-4xl mb-4 text-blue-600">📧</div>
                 <h3 className="text-xl font-bold mb-4 text-gray-800">Email Us</h3>
                 <p className="text-gray-600 mb-4">
-                  Send us a message and we'll respond within 24 hours
+                  Send us a message and we&apos;ll respond within 24 hours
                 </p>
                 <a 
                   href="mailto:info@seekingangels.org" 
@@ -251,7 +251,7 @@ export default function Contact() {
                 <p className="text-gray-700">
                   Our programs are designed for active and retired First Responders, including 
                   firefighters, police officers, paramedics, EMTs, emergency room doctors, and nurses. 
-                  If you're unsure about your eligibility, please contact us and we'll be happy to discuss your situation.
+                  If you&apos;re unsure about your eligibility, please contact us and we&apos;ll be happy to discuss your situation.
                 </p>
               </div>
               
@@ -293,7 +293,7 @@ export default function Contact() {
                 </h3>
                 <p className="text-gray-700">
                   Our current programs are designed specifically for First Responders, but we understand 
-                  that trauma affects entire families. We're exploring family-oriented programs for the future. 
+                  that trauma affects entire families. We&apos;re exploring family-oriented programs for the future. 
                   Please contact us to discuss your specific needs.
                 </p>
               </div>
@@ -310,7 +310,7 @@ export default function Contact() {
               Need Immediate Help?
             </h2>
             <p className="text-lg text-gray-700 mb-8">
-              If you're experiencing a mental health crisis, please reach out for immediate support:
+              If you&apos;re experiencing a mental health crisis, please reach out for immediate support:
             </p>
             <div className="grid md:grid-cols-2 gap-8">
               <div className="bg-white p-6 rounded-lg shadow-lg">
@@ -366,7 +366,7 @@ export default function Contact() {
             Ready to Make a Difference?
           </h2>
           <p className="text-lg mb-8 max-w-3xl mx-auto">
-            Whether you're seeking support or want to support others, we're here to help. 
+            Whether you&apos;re seeking support or want to support others, we&apos;re here to help. 
             Contact us today to learn more about our programs and how you can get involved.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

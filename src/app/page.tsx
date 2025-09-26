@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import DonationProgress from "@/components/DonationProgress";
 
 export default function Home() {
@@ -26,7 +25,7 @@ export default function Home() {
             Seeking Angels Foundation
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-green-400">
-            "Dedicated to First Responders"
+            &quot;Dedicated to First Responders&quot;
           </p>
           <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto">
             Have you ever heard a person say that they believe their rescuers must be Angels? 
@@ -60,7 +59,7 @@ export default function Home() {
               <div className="bg-white p-8 rounded-lg shadow-lg">
                 <h3 className="text-2xl font-bold mb-4 text-red-600">PTSD</h3>
                 <p className="text-gray-700">
-                  PTSD or "post traumatic stress disorder" is caused by the memory 
+                  PTSD or &quot;post traumatic stress disorder&quot; is caused by the memory 
                   associated with a traumatic event. We repeatedly, consciously or 
                   subconsciously re-live the event which often causes disorders such as 
                   depression, anxiety and stress.
@@ -69,7 +68,7 @@ export default function Home() {
               <div className="bg-white p-8 rounded-lg shadow-lg">
                 <h3 className="text-2xl font-bold mb-4 text-orange-600">C-PTSD</h3>
                 <p className="text-gray-700">
-                  C-PTSD or "complex traumatic stress disorder" is similar to PTSD but can 
+                  C-PTSD or &quot;complex traumatic stress disorder&quot; is similar to PTSD but can 
                   have more severe effects due to the re-living of a repetitive trauma, or 
                   having witnessed too many traumatic events.
                 </p>
@@ -165,13 +164,13 @@ export default function Home() {
       <section className="py-16 bg-green-600 text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-8">
-            Every Dollar Counts, Invest In Someone's Future
+            Every Dollar Counts, Invest In Someone&apos;s Future
           </h2>
           <p className="text-lg mb-8 max-w-3xl mx-auto">
             Seeking Angels Foundation depends on donations to help establish a lasting difference 
             and future in the lives of our members. Please help us with whatever you can, 
             Veterans and First Responders are always there for us, but they see more than 
-            their share of traumatic situations, let's turn the table and help them!
+            their share of traumatic situations, let&apos;s turn the table and help them!
           </p>
           <Link 
             href="/donation" 
