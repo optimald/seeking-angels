@@ -120,20 +120,37 @@ export default function Calendar() {
 
     // Add days of the month
     for (let day = 1; day <= daysInMonth; day++) {
+      const date = new Date(selectedYear, selectedMonth, day);
+      const dayOfWeek = date.getDay();
       const isRetreat = isRetreatWeek(day, selectedMonth, selectedYear);
-      const isToday = new Date().toDateString() === new Date(selectedYear, selectedMonth, day).toDateString();
+      const isToday = new Date().toDateString() === date.toDateString();
+      
+      // Determine if this day is part of a hovered week
+      const isHovered = hoveredWeek && 
+        date >= hoveredWeek.start && 
+        date <= hoveredWeek.end;
       
       days.push(
         <div
           key={day}
           onClick={() => handleDateClick(day, selectedMonth, selectedYear)}
-          className={`h-12 flex items-center justify-center border border-gray-200 cursor-pointer transition-colors ${
+          onMouseEnter={() => handleDateHover(day, selectedMonth, selectedYear)}
+          onMouseLeave={handleDateLeave}
+          className={`h-12 flex items-center justify-center border border-gray-200 cursor-pointer transition-colors relative ${
             isRetreat 
               ? 'bg-green-100 hover:bg-green-200 text-green-800 font-semibold' 
               : 'hover:bg-gray-50'
-          } ${isToday ? 'ring-2 ring-blue-500' : ''}`}
+          } ${isToday ? 'ring-2 ring-blue-500' : ''} ${
+            isHovered ? 'bg-green-200' : ''
+          }`}
         >
           {day}
+          {/* Add flight info tooltip for Saturday and Thursday */}
+          {(dayOfWeek === 6 || dayOfWeek === 4) && isRetreat && (
+            <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+              {dayOfWeek === 6 ? 'LAX → Loreto' : 'Loreto → LAX'}
+            </div>
+          )}
         </div>
       );
     }
@@ -213,10 +230,10 @@ export default function Calendar() {
               {/* Previous Year Button */}
               <button
                 onClick={() => setSelectedYear(selectedYear - 1)}
-                className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                className="p-3 rounded-lg bg-gray-100 hover:bg-gray-200 border border-gray-300 transition-colors"
                 title="Previous Year"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
                 </svg>
               </button>
@@ -231,10 +248,10 @@ export default function Calendar() {
                     setSelectedMonth(selectedMonth - 1);
                   }
                 }}
-                className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                className="p-3 rounded-lg bg-gray-100 hover:bg-gray-200 border border-gray-300 transition-colors"
                 title="Previous Month"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
               </button>
@@ -256,10 +273,10 @@ export default function Calendar() {
                     setSelectedMonth(selectedMonth + 1);
                   }
                 }}
-                className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                className="p-3 rounded-lg bg-gray-100 hover:bg-gray-200 border border-gray-300 transition-colors"
                 title="Next Month"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </button>
@@ -267,10 +284,10 @@ export default function Calendar() {
               {/* Next Year Button */}
               <button
                 onClick={() => setSelectedYear(selectedYear + 1)}
-                className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                className="p-3 rounded-lg bg-gray-100 hover:bg-gray-200 border border-gray-300 transition-colors"
                 title="Next Year"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
                 </svg>
               </button>
@@ -282,7 +299,7 @@ export default function Calendar() {
                   setSelectedMonth(today.getMonth());
                   setSelectedYear(today.getFullYear());
                 }}
-                className="ml-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors"
+                className="ml-4 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors shadow-md"
                 title="Go to Current Month"
               >
                 Today
